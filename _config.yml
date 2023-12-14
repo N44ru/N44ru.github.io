@@ -19,7 +19,7 @@ title                    : "N44ru"
 title_separator          : "|"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Nathan Lima"
-description              : "Blog pessoal sobre Hacking."
+description              : "Personal website about hacking."
 url                      : "https://N44ru.github.io"
 baseurl                  : # "url"
 repository               : # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
