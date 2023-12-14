@@ -1,0 +1,629 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.19.2 by Michael Rose
+  Copyright 2013-2019 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="pt" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>(PT-BR) OffSec - FunboxEasyEnum | Nathan Lima</title>
+<meta name="description" content="Write-Up da máquina FunboxEasyEnum da OffSec. ">
+
+
+  <meta name="author" content="Nathan Lima">
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="Nathan Lima">
+<meta property="og:title" content="(PT-BR) OffSec - FunboxEasyEnum">
+<meta property="og:url" content="http://localhost:4000/write-up/FunboxEasyEnum/">
+
+
+  <meta property="og:description" content="Write-Up da máquina FunboxEasyEnum da OffSec. ">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/FunboxEasyEnum/capa.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2023-12-13T00:00:00-03:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/write-up/FunboxEasyEnum/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Nathan Lima",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Nathan Lima Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+<!-- favicon -->
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/images/main/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/images/main/favicon-16x16.png">
+<meta name="theme-color" content="#ffffff">
+
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/main/Logo.png" alt=""></a>
+        
+        <a class="site-title" href="/">
+          Nathan Lima
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Categories</a>
+            </li><li class="masthead__menu-item">
+              <a href="/machines/">Machines</a>
+            </li><li class="masthead__menu-item">
+              <a href="/whoami/">Whoami</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Buscar</span>
+          <svg class="icon" width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.99 16">
+            <path d="M15.5,13.12L13.19,10.8a1.69,1.69,0,0,0-1.28-.55l-0.06-.06A6.5,6.5,0,0,0,5.77,0,6.5,6.5,0,0,0,2.46,11.59a6.47,6.47,0,0,0,7.74.26l0.05,0.05a1.65,1.65,0,0,0,.5,1.24l2.38,2.38A1.68,1.68,0,0,0,15.5,13.12ZM6.4,2A4.41,4.41,0,1,1,2,6.4,4.43,4.43,0,0,1,6.4,2Z" transform="translate(-.01)"></path>
+          </svg>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero--overlay"
+  style=" background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/assets/images/FunboxEasyEnum/capa.png');"
+>
+  
+    <div class="wrapper">
+      <h1 id="page-title" class="page__title" itemprop="headline">
+        
+          (PT-BR) OffSec - FunboxEasyEnum
+
+        
+      </h1>
+      
+        <p class="page__lead">Write-Up da máquina FunboxEasyEnum da OffSec.
+</p>
+      
+      
+        <p class="page__meta"><i class="far fa-clock" aria-hidden="true"></i> 
+
+
+
+
+  1 minuto(s) de leitura
+
+</p>
+      
+      
+      
+    </div>
+  
+  
+</div>
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/main/avatar.jpg" alt="Nathan Lima" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Nathan Lima</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Junior Vulnerability Management Analyst and Pentest Student</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Acompanhe no</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Brazil - Rio de Janeiro</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://github.com/N47h4nL1m4" rel="nofollow noopener noreferrer"  target="_blank"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.linkedin.com/in/nathan-lima-cybersecurity/" rel="nofollow noopener noreferrer"  target="_blank"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+    
+      
+      
+      
+      
+    
+    
+      
+
+<nav class="nav__list">
+  
+  <input id="ac-toc" name="accordion-toc" type="checkbox" />
+  <label for="ac-toc">Toggle Menu</label>
+  <ul class="nav__items">
+    
+      <li>
+        
+          <a href="/"><span class="nav__sub-title">Categories</span></a>
+        
+
+        
+        <ul>
+          
+            <li><a href="/categories/#write-up">Write-Ups</a></li>
+          
+        </ul>
+        
+      </li>
+    
+      <li>
+        
+          <a href="/"><span class="nav__sub-title">Machines</span></a>
+        
+
+        
+        <ul>
+          
+            <li><a href="/machines/#unix-easy">Unix-Easy</a></li>
+          
+            <li><a href="/machines/#unix-medium">Unix-Medium</a></li>
+          
+            <li><a href="/machines/#unix-hard">Unix-Hard</a></li>
+          
+            <li><a href="/machines/#windows-easy">Windows-Easy</a></li>
+          
+            <li><a href="/machines/#windows-medium">Windows-Medium</a></li>
+          
+            <li><a href="/machines/#windows-hard">Windows-Hard</a></li>
+          
+        </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+
+    
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="(PT-BR) OffSec - FunboxEasyEnum">
+    <meta itemprop="description" content="Write-Up da máquina FunboxEasyEnum da OffSec.">
+    <meta itemprop="datePublished" content="2023-12-13T00:00:00-03:00">
+    
+
+    <div class="page__inner-wrap">
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h1 id="objetivo">Objetivo</h1>
+
+<p>O objetivo dessa máquina é a captura de duas flags. Uma no servidor interno e outra com acesso de root.</p>
+
+<h1 id="enumeração">Enumeração</h1>
+
+<p>Para começar o processo de enumeração foi utilizado o Ping para testar a conectividade com o host informado, além de descobrir o TTL da máquina.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ping <span class="nt">-c</span> 5 192.168.223.132
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/2.png" alt="" class="align-center" /></p>
+
+<p>Nesse caso a máquina já estava ativa e tinha TTL=61, possivelmente um sistema Linux.</p>
+
+<p>Iniciando o processo de enumeração foi utilizado o Nmap para descobrir quais portas estavam abertas no host.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nmap <span class="nt">-v</span> <span class="nt">-Pn</span> <span class="nt">-n</span> <span class="nt">-sT</span> 192.168.223.132 <span class="nt">-p-</span> <span class="nt">--min-rate</span> 5000
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/1.png" alt="" class="align-center" /></p>
+
+<p>Foram identificadas as portas 22 e 80.</p>
+
+<h3 id="porta-22">Porta 22</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nc <span class="nt">-vn</span> 192.168.223.132 22
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/3.png" alt="" class="align-center" /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh root@192.168.223.132
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/4.png" alt="" class="align-center" /></p>
+
+<h3 id="porta-80">Porta 80</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>whatweb <span class="nt">-a</span> 3 192.168.223.132
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/5.png" alt="" class="align-center" /></p>
+
+<p>Abrindo o endereço 192.168.223.132, encontrada tela default do Apache.</p>
+
+<p><img src="/assets/images/FunboxEasyEnum/6.png" alt="" class="align-center" /></p>
+
+<p>O código fonte da página também foi checado e não apresentou nada relevante.</p>
+
+<h3 id="fuzzing">Fuzzing</h3>
+
+<p>Continuando com a enumeração, foi feito Fuzzing para descobrir possíveis diretórios acessíveis.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gobuster <span class="nb">dir</span> <span class="nt">-u</span> http://192.168.223.132 <span class="nt">-w</span> /usr/share/wordlists/seclists/Discovery/Web-Content/common.txt <span class="nt">-x</span> php <span class="nt">-n</span> <span class="nt">-e</span> <span class="nt">-t</span> 50
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/8.png" alt="" class="align-center" /></p>
+
+<p>Entrando nos diretórios encontrados.</p>
+
+<ul>
+  <li>/robots.txt
+<img src="/assets/images/FunboxEasyEnum/10.png" alt="" class="align-center" /></li>
+  <li>/phpmyadmin
+<img src="/assets/images/FunboxEasyEnum/11.png" alt="" class="align-center" /></li>
+  <li>/mini.php
+<img src="/assets/images/FunboxEasyEnum/12.png" alt="" class="align-center" /></li>
+</ul>
+
+<h2 id="reverse-shell">Reverse Shell</h2>
+
+<p>O diretório mini.php apresentou um sistema de upload de arquivos. Dessa forma, foi configurado um “shell.php” para uma possível reverse shell.</p>
+
+<p><img src="/assets/images/FunboxEasyEnum/14.png" alt="" class="align-center" /></p>
+
+<p><img src="/assets/images/FunboxEasyEnum/15.png" alt="" class="align-center" /></p>
+
+<p>Preparada a conexão com nc.</p>
+
+<p><img src="/assets/images/FunboxEasyEnum/16.png" alt="" class="align-center" /></p>
+
+<p>Executando o arquivo.</p>
+
+<p><img src="/assets/images/FunboxEasyEnum/17.png" alt="" class="align-center" /></p>
+
+<p>Obtido acesso ao servidor interno.</p>
+
+<p>Primeiramente, upgrade na shell com Python.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">python3</span> <span class="o">-</span><span class="n">c</span> <span class="sh">"</span><span class="s">__import__(</span><span class="sh">'</span><span class="s">pty</span><span class="sh">'</span><span class="s">).spawn(</span><span class="sh">'</span><span class="s">/bin/bash</span><span class="sh">'</span><span class="s">)</span><span class="sh">"</span>
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/18.png" alt="" class="align-center" /></p>
+
+<p>Navegando nas pastas do servidor não foi possível encontrar a flag nos diretórios de usuários.</p>
+
+<p>Porém, procurando dentro da pasta do web server foi possível capturar a primeira flag.
+<img src="/assets/images/FunboxEasyEnum/20.png" alt="" class="align-center" /></p>
+
+<h2 id="enumerando-o-sistema">Enumerando o sistema</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /etc/passwd
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/19.png" alt="" class="align-center" /></p>
+
+<p>Foi possível observar que o usuário Oracle tinha um hash possível.</p>
+
+<p>Utilizado o hash-identifier para descobrir o tipo de hash.
+<img src="/assets/images/FunboxEasyEnum/21.png" alt="" class="align-center" /></p>
+
+<p>Usando o john para quebrar o hash.
+<img src="/assets/images/FunboxEasyEnum/22.png" alt="" class="align-center" /></p>
+
+<p>Logando no usuário oracle.
+<img src="/assets/images/FunboxEasyEnum/23.png" alt="" class="align-center" /></p>
+
+<p>Não foi possível listar as permissões de sudo.
+<img src="/assets/images/FunboxEasyEnum/24.png" alt="" class="align-center" /></p>
+
+<h2 id="privesc">PrivEsc</h2>
+
+<p>Dentro da pasta do usuário oracle também não foi possível encontrar nada relevante.</p>
+
+<p>Tentando autenticar com credenciais default nos usuários presentes, foi encontrado o goat:goat.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>su goat
+Password: goat
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/26.png" alt="" class="align-center" /></p>
+
+<p>Listando as permissões de sudo foi possível encontrar o /usr/bin/mysql.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> <span class="nt">-l</span> 
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/27.png" alt="" class="align-center" /></p>
+
+<p>Pesquisando no GTFOBins.
+<img src="/assets/images/FunboxEasyEnum/28.png" alt="" class="align-center" /></p>
+
+<p>Executando o comando.
+<img src="/assets/images/FunboxEasyEnum/29.png" alt="" class="align-center" /></p>
+
+<p>Procurando a última flag.
+<img src="/assets/images/FunboxEasyEnum/30.png" alt="" class="align-center" /></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#unix-easy" class="page__taxonomy-item" rel="tag">Unix-Easy</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categorias: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#write-up" class="page__taxonomy-item" rel="tag">Write-Up</a>
+    
+    </span>
+  </p>
+
+
+        
+          <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Atualizado em:</strong> <time datetime="2023-12-13T00:00:00-03:00">December 13, 2023</time></p>
+        
+      </footer>
+
+      
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Pesquisar..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+  <script src="https://kit.fontawesome.com/4eee35f757.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-14T09:42:35-03:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Nathan Lima</title><subtitle>Blog pessoal sobre Hacking.</subtitle><author><name>Nathan Lima</name></author><entry><title type="html">(PT-BR) OffSec - FunboxEasyEnum</title><link href="http://localhost:4000/write-up/FunboxEasyEnum/" rel="alternate" type="text/html" title="(PT-BR) OffSec - FunboxEasyEnum" /><published>2023-12-13T00:00:00-03:00</published><updated>2023-12-13T00:00:00-03:00</updated><id>http://localhost:4000/write-up/FunboxEasyEnum</id><content type="html" xml:base="http://localhost:4000/write-up/FunboxEasyEnum/"><![CDATA[<h1 id="objetivo">Objetivo</h1>
+
+<p>O objetivo dessa máquina é a captura de duas flags. Uma no servidor interno e outra com acesso de root.</p>
+
+<h1 id="enumeração">Enumeração</h1>
+
+<p>Para começar o processo de enumeração foi utilizado o Ping para testar a conectividade com o host informado, além de descobrir o TTL da máquina.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ping <span class="nt">-c</span> 5 192.168.223.132
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/2.png" alt="" class="align-center" /></p>
+
+<p>Nesse caso a máquina já estava ativa e tinha TTL=61, possivelmente um sistema Linux.</p>
+
+<p>Iniciando o processo de enumeração foi utilizado o Nmap para descobrir quais portas estavam abertas no host.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nmap <span class="nt">-v</span> <span class="nt">-Pn</span> <span class="nt">-n</span> <span class="nt">-sT</span> 192.168.223.132 <span class="nt">-p-</span> <span class="nt">--min-rate</span> 5000
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/1.png" alt="" class="align-center" /></p>
+
+<p>Foram identificadas as portas 22 e 80.</p>
+
+<h3 id="porta-22">Porta 22</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nc <span class="nt">-vn</span> 192.168.223.132 22
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/3.png" alt="" class="align-center" /></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh root@192.168.223.132
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/4.png" alt="" class="align-center" /></p>
+
+<h3 id="porta-80">Porta 80</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>whatweb <span class="nt">-a</span> 3 192.168.223.132
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/5.png" alt="" class="align-center" /></p>
+
+<p>Abrindo o endereço 192.168.223.132, encontrada tela default do Apache.</p>
+
+<p><img src="/assets/images/FunboxEasyEnum/6.png" alt="" class="align-center" /></p>
+
+<p>O código fonte da página também foi checado e não apresentou nada relevante.</p>
+
+<h3 id="fuzzing">Fuzzing</h3>
+
+<p>Continuando com a enumeração, foi feito Fuzzing para descobrir possíveis diretórios acessíveis.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gobuster <span class="nb">dir</span> <span class="nt">-u</span> http://192.168.223.132 <span class="nt">-w</span> /usr/share/wordlists/seclists/Discovery/Web-Content/common.txt <span class="nt">-x</span> php <span class="nt">-n</span> <span class="nt">-e</span> <span class="nt">-t</span> 50
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/8.png" alt="" class="align-center" /></p>
+
+<p>Entrando nos diretórios encontrados.</p>
+
+<ul>
+  <li>/robots.txt
+<img src="/assets/images/FunboxEasyEnum/10.png" alt="" class="align-center" /></li>
+  <li>/phpmyadmin
+<img src="/assets/images/FunboxEasyEnum/11.png" alt="" class="align-center" /></li>
+  <li>/mini.php
+<img src="/assets/images/FunboxEasyEnum/12.png" alt="" class="align-center" /></li>
+</ul>
+
+<h2 id="reverse-shell">Reverse Shell</h2>
+
+<p>O diretório mini.php apresentou um sistema de upload de arquivos. Dessa forma, foi configurado um “shell.php” para uma possível reverse shell.</p>
+
+<p><img src="/assets/images/FunboxEasyEnum/14.png" alt="" class="align-center" /></p>
+
+<p><img src="/assets/images/FunboxEasyEnum/15.png" alt="" class="align-center" /></p>
+
+<p>Preparada a conexão com nc.</p>
+
+<p><img src="/assets/images/FunboxEasyEnum/16.png" alt="" class="align-center" /></p>
+
+<p>Executando o arquivo.</p>
+
+<p><img src="/assets/images/FunboxEasyEnum/17.png" alt="" class="align-center" /></p>
+
+<p>Obtido acesso ao servidor interno.</p>
+
+<p>Primeiramente, upgrade na shell com Python.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">python3</span> <span class="o">-</span><span class="n">c</span> <span class="sh">"</span><span class="s">__import__(</span><span class="sh">'</span><span class="s">pty</span><span class="sh">'</span><span class="s">).spawn(</span><span class="sh">'</span><span class="s">/bin/bash</span><span class="sh">'</span><span class="s">)</span><span class="sh">"</span>
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/18.png" alt="" class="align-center" /></p>
+
+<p>Navegando nas pastas do servidor não foi possível encontrar a flag nos diretórios de usuários.</p>
+
+<p>Porém, procurando dentro da pasta do web server foi possível capturar a primeira flag.
+<img src="/assets/images/FunboxEasyEnum/20.png" alt="" class="align-center" /></p>
+
+<h2 id="enumerando-o-sistema">Enumerando o sistema</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> /etc/passwd
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/19.png" alt="" class="align-center" /></p>
+
+<p>Foi possível observar que o usuário Oracle tinha um hash possível.</p>
+
+<p>Utilizado o hash-identifier para descobrir o tipo de hash.
+<img src="/assets/images/FunboxEasyEnum/21.png" alt="" class="align-center" /></p>
+
+<p>Usando o john para quebrar o hash.
+<img src="/assets/images/FunboxEasyEnum/22.png" alt="" class="align-center" /></p>
+
+<p>Logando no usuário oracle.
+<img src="/assets/images/FunboxEasyEnum/23.png" alt="" class="align-center" /></p>
+
+<p>Não foi possível listar as permissões de sudo.
+<img src="/assets/images/FunboxEasyEnum/24.png" alt="" class="align-center" /></p>
+
+<h2 id="privesc">PrivEsc</h2>
+
+<p>Dentro da pasta do usuário oracle também não foi possível encontrar nada relevante.</p>
+
+<p>Tentando autenticar com credenciais default nos usuários presentes, foi encontrado o goat:goat.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>su goat
+Password: goat
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/26.png" alt="" class="align-center" /></p>
+
+<p>Listando as permissões de sudo foi possível encontrar o /usr/bin/mysql.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> <span class="nt">-l</span> 
+</code></pre></div></div>
+<p><img src="/assets/images/FunboxEasyEnum/27.png" alt="" class="align-center" /></p>
+
+<p>Pesquisando no GTFOBins.
+<img src="/assets/images/FunboxEasyEnum/28.png" alt="" class="align-center" /></p>
+
+<p>Executando o comando.
+<img src="/assets/images/FunboxEasyEnum/29.png" alt="" class="align-center" /></p>
+
+<p>Procurando a última flag.
+<img src="/assets/images/FunboxEasyEnum/30.png" alt="" class="align-center" /></p>]]></content><author><name>Nathan Lima</name></author><category term="Write-Up" /><category term="Unix-Easy" /><summary type="html"><![CDATA[Write-Up da máquina FunboxEasyEnum da OffSec.]]></summary></entry></feed>

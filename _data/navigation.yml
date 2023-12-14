@@ -1,0 +1,34 @@
+# main links
+main:
+  - title: "Categories"
+    url: /categories/
+
+  - title: "Machines"
+    url: /machines/
+
+  - title: "Whoami"
+    url: /whoami/
+
+sidebar:
+  - title: Categories
+    url: /
+    children:
+      - title: Write-Ups
+        url: /categories/#write-up
+
+  - title: Machines
+    url: /
+    children:
+      - title: "Unix-Easy"
+        url: /machines/#unix-easy
+      - title: "Unix-Medium"
+        url: /machines/#unix-medium
+      - title: "Unix-Hard"
+        url: /machines/#unix-hard     
+      - title: "Windows-Easy"
+        url: /machines/#windows-easy
+      - title: "Windows-Medium"
+        url: /machines/#windows-medium
+      - title: "Windows-Hard"
+        url: /machines/#windows-hard
+      
