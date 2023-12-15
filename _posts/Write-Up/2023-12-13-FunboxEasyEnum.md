@@ -18,9 +18,8 @@ toc_label: "On This Blog"
 toc_icon: "biohazard"
 ---
 
-# Objetivo
-
-O objetivo dessa máquina é a captura de duas flags. Uma no servidor interno e outra com acesso de root.
+# Introdução
+A exploração da máquina trata de um File Upload.
 
 # Enumeração
 
